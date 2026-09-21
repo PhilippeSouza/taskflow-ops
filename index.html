@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu To-Do | E-commerce, Marketplaces & Redes</title>
+  <title>TaskFlow Ops | Gestão de E-commerce, Marketplaces & Redes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
           <div class="brand-icon">⚡</div>
           <div class="brand-text">
             <h2>TaskFlow Ops</h2>
-            <span>E-commerce & Marketplaces</span>
+            <span>Painel de Operações Digitais</span>
           </div>
         </div>
       </div>
@@ -41,22 +41,41 @@
           <span class="nav-badge" id="count-all">0</span>
         </button>
 
-        <div class="nav-section-title">SUAS FRENTES DE TRABALHO</div>
+        <div class="nav-section-title">MARKETPLACES (POR CANAL)</div>
+        <button class="nav-item channel-shopee" data-filter="shopee">
+          <span class="nav-icon">🟠</span>
+          <span class="nav-label">Shopee <small class="sub-label">(Ponto Focal)</small></span>
+          <span class="nav-badge" id="count-shopee">0</span>
+        </button>
+        <button class="nav-item channel-ml" data-filter="mercadolivre">
+          <span class="nav-icon">🟡</span>
+          <span class="nav-label">Mercado Livre <small class="sub-label">(Setup)</small></span>
+          <span class="nav-badge" id="count-mercadolivre">0</span>
+        </button>
+        <button class="nav-item channel-magalu" data-filter="magalu">
+          <span class="nav-icon">🔵</span>
+          <span class="nav-label">Magalu <small class="sub-label">(Setup)</small></span>
+          <span class="nav-badge" id="count-magalu">0</span>
+        </button>
+        <button class="nav-item channel-amazon" data-filter="amazon">
+          <span class="nav-icon">📦</span>
+          <span class="nav-label">Amazon <small class="sub-label">(Setup)</small></span>
+          <span class="nav-badge" id="count-amazon">0</span>
+        </button>
+
+        <div class="nav-section-title">LOJA PRÓPRIA & CONTEÚDO</div>
         <button class="nav-item" data-filter="wordpress">
           <span class="nav-icon">🚀</span>
           <span class="nav-label">E-commerce WordPress</span>
           <span class="nav-badge wp-badge" id="wp-progress-pill">0%</span>
         </button>
-        <button class="nav-item" data-filter="marketplaces">
-          <span class="nav-icon">🛒</span>
-          <span class="nav-label">Marketplaces & Catálogo</span>
-          <span class="nav-badge" id="count-marketplaces">0</span>
-        </button>
-        <button class="nav-item" data-filter="social">
+        <button class="nav-item" data-filter="meta">
           <span class="nav-icon">📱</span>
-          <span class="nav-label">Redes Sociais & Anúncios</span>
-          <span class="nav-badge" id="count-social">0</span>
+          <span class="nav-label">Meta (Insta & Face)</span>
+          <span class="nav-badge" id="count-meta">0</span>
         </button>
+
+        <div class="nav-section-title">ORGANIZAÇÃO</div>
         <button class="nav-item" data-filter="rotinas">
           <span class="nav-icon">🔁</span>
           <span class="nav-label">Rotinas Recorrentes</span>
@@ -72,9 +91,9 @@
       <div class="sidebar-footer">
         <div class="assistant-card">
           <div class="assistant-status">
-            <span class="status-dot"></span> Copiloto IA Ativo
+            <span class="status-dot"></span> Copiloto IA Sincronizado
           </div>
-          <p>Trabalhando junto no diretório <strong>Controle de tarefas</strong>.</p>
+          <p>Gerenciando Shopee, ML, Magalu, Amazon, WordPress e Meta Orgânico.</p>
         </div>
       </div>
     </aside>
@@ -93,10 +112,13 @@
             <span class="search-icon">🔍</span>
             <input type="text" id="search-input" placeholder="Buscar tarefas ou #tags...">
           </div>
-          <button id="btn-export" class="btn-secondary" title="Exportar dados para salvar no arquivo tarefas.json">
+          <button id="btn-export" class="btn-secondary" title="Exportar dados para atualizar o arquivo tarefas.json">
             💾 Salvar tarefas.json
           </button>
-          <button id="btn-import-toggle" class="btn-ghost" title="Carregar ou restaurar arquivo JSON">
+          <button id="btn-reset" class="btn-ghost" title="Recarregar dados originais com a nova estrutura">
+            🔄 Recarregar Estrutura
+          </button>
+          <button id="btn-import-toggle" class="btn-ghost" title="Carregar arquivo JSON">
             📂 Importar
           </button>
           <input type="file" id="file-import" accept=".json" style="display: none;">
@@ -107,13 +129,22 @@
       <div id="wp-progress-banner" class="progress-banner" style="display: none;">
         <div class="progress-info">
           <div>
-            <h3>🚀 Termômetro de Lançamento da Loja (WordPress)</h3>
-            <p>Conclua as etapas essenciais para colocar o e-commerce no ar com segurança.</p>
+            <h3>🚀 Termômetro de Lançamento da Loja (WordPress / WooCommerce)</h3>
+            <p>Você está iniciando do zero! Siga o passo a passo até colocar o e-commerce no ar.</p>
           </div>
           <span class="progress-percentage" id="wp-progress-text">0%</span>
         </div>
         <div class="progress-bar-container">
           <div class="progress-bar-fill" id="wp-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Banner de Ponto Focal para a Shopee -->
+      <div id="shopee-focus-banner" class="channel-banner shopee-banner" style="display: none;">
+        <div class="channel-banner-icon">🟠</div>
+        <div>
+          <h4>Ponto Focal Operacional</h4>
+          <p>Sua plataforma mais completa e automatizada. Mantenha as taxas de chat altas e pedidos despachados no prazo.</p>
         </div>
       </div>
 
@@ -126,13 +157,16 @@
         <div class="add-task-options">
           <select id="new-task-category">
             <option value="myDay">☀️ Meu Dia (Geral)</option>
+            <option value="shopee">🟠 Shopee (Ponto Focal)</option>
+            <option value="mercadolivre">🟡 Mercado Livre (Setup)</option>
+            <option value="magalu">🔵 Magalu (Setup)</option>
+            <option value="amazon">📦 Amazon (Setup)</option>
             <option value="wordpress">🚀 E-commerce WordPress</option>
-            <option value="marketplaces">🛒 Marketplaces & Catálogo</option>
-            <option value="social">📱 Redes Sociais & Anúncios</option>
+            <option value="meta">📱 Meta (Insta & Face Orgânico)</option>
             <option value="rotinas">🔁 Rotinas Recorrentes</option>
             <option value="aguardando">⏳ Aguardando / Chamados</option>
           </select>
-          <input type="text" id="new-task-tags" placeholder="Tags: #shopee, #urgente">
+          <input type="text" id="new-task-tags" placeholder="Tags: #urgente, #catalogo, #setup">
           <button id="btn-add-task" class="btn-primary">Adicionar</button>
         </div>
       </div>

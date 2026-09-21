@@ -18,7 +18,9 @@ const wpProgressBanner = document.getElementById('wp-progress-banner');
 const wpProgressBar = document.getElementById('wp-progress-bar');
 const wpProgressText = document.getElementById('wp-progress-text');
 const wpProgressPill = document.getElementById('wp-progress-pill');
+const shopeeBanner = document.getElementById('shopee-focus-banner');
 const btnExport = document.getElementById('btn-export');
+const btnReset = document.getElementById('btn-reset');
 const btnImportToggle = document.getElementById('btn-import-toggle');
 const fileImport = document.getElementById('file-import');
 
@@ -27,17 +29,23 @@ const viewTitles = {
   myDay: '☀️ Meu Dia',
   important: '⭐ Tarefas Importantes',
   all: '📋 Todas as Tarefas',
+  shopee: '🟠 Shopee (Ponto Focal & Operação)',
+  mercadolivre: '🟡 Mercado Livre (Setup & Tração)',
+  magalu: '🔵 Magalu (Setup & Catálogo)',
+  amazon: '📦 Amazon (Setup & Buy Box)',
   wordpress: '🚀 Projeto: E-commerce WordPress',
-  marketplaces: '🛒 Marketplaces & Catálogo',
-  social: '📱 Redes Sociais & Anúncios',
+  meta: '📱 Meta (Instagram & Facebook Orgânico)',
   rotinas: '🔁 Rotinas Recorrentes',
   aguardando: '⏳ Aguardando / Chamados'
 };
 
 const categoryNames = {
+  shopee: '🟠 Shopee',
+  mercadolivre: '🟡 Mercado Livre',
+  magalu: '🔵 Magalu',
+  amazon: '📦 Amazon',
   wordpress: '🚀 E-commerce WordPress',
-  marketplaces: '🛒 Marketplaces & Catálogo',
-  social: '📱 Redes Sociais',
+  meta: '📱 Meta (Insta & Face)',
   rotinas: '🔁 Rotinas Recorrentes',
   aguardando: '⏳ Aguardando',
   myDay: '☀️ Geral'
@@ -57,28 +65,30 @@ function renderDate() {
   currentDateStrEl.textContent = today.charAt(0).toUpperCase() + today.slice(1);
 }
 
-// Carregar tarefas (LocalStorage ou tarefas.json)
-async function loadTasks() {
-  const localData = localStorage.getItem('taskflow_tasks');
-  if (localData) {
-    try {
-      tasks = JSON.parse(localData);
-      return;
-    } catch (e) {
-      console.error('Erro ao ler LocalStorage:', e);
+// Carregar tarefas
+async function loadTasks(forceReloadFromFile = false) {
+  if (!forceReloadFromFile) {
+    const localData = localStorage.getItem('taskflow_tasks_v2');
+    if (localData) {
+      try {
+        tasks = JSON.parse(localData);
+        return;
+      } catch (e) {
+        console.error('Erro ao ler LocalStorage:', e);
+      }
     }
   }
 
-  // Tentar buscar do arquivo local tarefas.json
+  // Buscar do arquivo tarefas.json
   try {
-    const res = await fetch('tarefas.json');
+    const res = await fetch('tarefas.json?v=' + Date.now());
     if (res.ok) {
       tasks = await res.json();
       saveTasks();
       return;
     }
   } catch (err) {
-    console.log('Não foi possível carregar tarefas.json via fetch direto, usando fallback:', err);
+    console.log('Tentativa de carregar tarefas.json:', err);
   }
 
   tasks = [];
@@ -86,7 +96,7 @@ async function loadTasks() {
 
 // Salvar no LocalStorage
 function saveTasks() {
-  localStorage.setItem('taskflow_tasks', JSON.stringify(tasks));
+  localStorage.setItem('taskflow_tasks_v2', JSON.stringify(tasks));
   updateBadges();
   updateWpProgress();
 }
@@ -101,15 +111,12 @@ function setupEventListeners() {
       currentFilter = button.dataset.filter;
       currentViewTitleEl.textContent = viewTitles[currentFilter] || 'Tarefas';
       
-      // Mostrar barra de progresso apenas na visão do WordPress
-      if (currentFilter === 'wordpress') {
-        wpProgressBanner.style.display = 'block';
-      } else {
-        wpProgressBanner.style.display = 'none';
-      }
+      // Controle dos banners especiais
+      if (wpProgressBanner) wpProgressBanner.style.display = currentFilter === 'wordpress' ? 'block' : 'none';
+      if (shopeeBanner) shopeeBanner.style.display = currentFilter === 'shopee' ? 'flex' : 'none';
 
       // Pré-selecionar categoria no dropdown de adicionar tarefa
-      if (['wordpress', 'marketplaces', 'social', 'rotinas', 'aguardando'].includes(currentFilter)) {
+      if (['shopee', 'mercadolivre', 'magalu', 'amazon', 'wordpress', 'meta', 'rotinas', 'aguardando'].includes(currentFilter)) {
         newTaskCategory.value = currentFilter;
       }
 
@@ -147,6 +154,16 @@ function setupEventListeners() {
     downloadAnchor.click();
     downloadAnchor.remove();
   });
+
+  // Botão de recarregar estrutura inicial
+  if (btnReset) {
+    btnReset.addEventListener('click', async () => {
+      if (confirm('Deseja recarregar a lista atualizada a partir do tarefas.json? (As alterações locais serão sincronizadas com o arquivo)')) {
+        await loadTasks(true);
+        renderApp();
+      }
+    });
+  }
 
   // Importar JSON
   btnImportToggle.addEventListener('click', () => fileImport.click());
@@ -212,8 +229,11 @@ function updateBadges() {
     myDay: tasks.filter(t => t.myDay && !t.completed).length,
     important: tasks.filter(t => t.important && !t.completed).length,
     all: tasks.filter(t => !t.completed).length,
-    marketplaces: tasks.filter(t => t.category === 'marketplaces' && !t.completed).length,
-    social: tasks.filter(t => t.category === 'social' && !t.completed).length,
+    shopee: tasks.filter(t => t.category === 'shopee' && !t.completed).length,
+    mercadolivre: tasks.filter(t => t.category === 'mercadolivre' && !t.completed).length,
+    magalu: tasks.filter(t => t.category === 'magalu' && !t.completed).length,
+    amazon: tasks.filter(t => t.category === 'amazon' && !t.completed).length,
+    meta: tasks.filter(t => t.category === 'meta' && !t.completed).length,
     rotinas: tasks.filter(t => t.category === 'rotinas' && !t.completed).length,
     aguardando: tasks.filter(t => t.category === 'aguardando' && !t.completed).length
   };
@@ -231,23 +251,21 @@ function updateWpProgress() {
   const completed = wpTasks.filter(t => t.completed).length;
   const percentage = Math.round((completed / wpTasks.length) * 100);
 
-  wpProgressPill.textContent = `${percentage}%`;
-  wpProgressBar.style.width = `${percentage}%`;
-  wpProgressText.textContent = `${percentage}%`;
+  if (wpProgressPill) wpProgressPill.textContent = `${percentage}%`;
+  if (wpProgressBar) wpProgressBar.style.width = `${percentage}%`;
+  if (wpProgressText) wpProgressText.textContent = `${percentage}%`;
 }
 
 function renderTasks() {
   taskListEl.innerHTML = '';
 
   let filtered = tasks.filter(task => {
-    // Filtro da aba
+    // Filtro de canal / visão
     if (currentFilter === 'myDay' && !task.myDay) return false;
     if (currentFilter === 'important' && !task.important) return false;
-    if (currentFilter === 'wordpress' && task.category !== 'wordpress') return false;
-    if (currentFilter === 'marketplaces' && task.category !== 'marketplaces') return false;
-    if (currentFilter === 'social' && task.category !== 'social') return false;
-    if (currentFilter === 'rotinas' && task.category !== 'rotinas') return false;
-    if (currentFilter === 'aguardando' && task.category !== 'aguardando') return false;
+    if (['shopee', 'mercadolivre', 'magalu', 'amazon', 'wordpress', 'meta', 'rotinas', 'aguardando'].includes(currentFilter)) {
+      if (task.category !== currentFilter) return false;
+    }
 
     // Ocultar concluídas
     if (hideCompleted && task.completed) return false;
@@ -255,7 +273,7 @@ function renderTasks() {
     // Busca
     if (searchQuery) {
       const inTitle = task.title.toLowerCase().includes(searchQuery);
-      const inTags = task.tags.some(t => t.toLowerCase().includes(searchQuery));
+      const inTags = (task.tags || []).some(t => t.toLowerCase().includes(searchQuery));
       const inCategory = (task.categoryName || '').toLowerCase().includes(searchQuery);
       if (!inTitle && !inTags && !inCategory) return false;
     }
@@ -264,14 +282,14 @@ function renderTasks() {
   });
 
   const countLabel = document.getElementById('tasks-count-label');
-  countLabel.textContent = `${filtered.length} TAREFAS ENCONTRADAS`;
+  countLabel.textContent = `${filtered.length} TAREFAS`;
 
   if (filtered.length === 0) {
     taskListEl.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🎉</div>
         <h3>Tudo em ordem por aqui!</h3>
-        <p>Nenhuma tarefa pendente nesta visão ou correspondente à busca.</p>
+        <p>Nenhuma tarefa pendente neste canal ou busca.</p>
       </div>
     `;
     return;
@@ -300,7 +318,7 @@ function renderTasks() {
     }
 
     // Tags
-    const tagsHtml = task.tags.map(t => `<span class="tag-pill" onclick="filterByTag('${t}')">${t}</span>`).join(' ');
+    const tagsHtml = (task.tags || []).map(t => `<span class="tag-pill" onclick="filterByTag('${t}')">${t}</span>`).join(' ');
 
     li.innerHTML = `
       <div class="task-main-row">
@@ -310,7 +328,7 @@ function renderTasks() {
         <div class="task-content">
           <span class="task-title" data-action="toggle-complete" data-id="${task.id}">${task.title}</span>
           <div class="task-meta">
-            <span class="category-tag">${task.categoryName || 'Geral'}</span>
+            <span class="category-tag cat-${task.category}">${task.categoryName || 'Geral'}</span>
             ${tagsHtml}
           </div>
         </div>
@@ -352,7 +370,6 @@ function renderTasks() {
         const sub = task.subtasks.find(s => s.id === subId);
         if (sub) {
           sub.completed = e.target.checked;
-          // Se todas as subtarefas foram marcadas, podemos sugerir marcar a tarefa
           saveTasks();
           renderApp();
         }

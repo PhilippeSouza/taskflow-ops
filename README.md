@@ -18,14 +18,16 @@ O **TaskFlow Ops** foi projetado para eliminar a sobrecarga mental e oferecer um
 
 ## ✨ Principais Funcionalidades
 
-* 🚀 **Termômetro de Lançamento de E-commerce:** Monitoramento do progresso percentual (0% a 100%) das etapas essenciais de implantação de loja WordPress/WooCommerce (DNS, SSL, Gateway de Pagamento PIX/Cartão, Frete, Catálogo e ERP).
-* ☀️ **Visão "Meu Dia" (*My Day*):** Foco exclusivo nas prioridades inegociáveis do dia, reduzindo a dispersão.
-* 🛒 **Divisão por Frentes Operacionais:**
-  * **E-commerce WordPress:** Roadmap cronológico de desenvolvimento.
-  * **Marketplaces & Catálogo:** Fichas técnicas, SEO de produtos e promoções.
-  * **Redes Sociais:** Calendário editorial, anúncios e criativos.
-  * **Rotinas Recorrentes:** Checkpoints diários e semanais automatizados.
-  * **Aguardando / Chamados:** Gestão de pendências com terceiros (suporte, fornecedores, aprovações).
+* 🚀 **Termômetro de Lançamento de E-commerce:** Monitoramento do progresso percentual (0% a 100%) da implantação da loja própria WordPress/WooCommerce iniciada do zero.
+* ☀️ **Visão "Meu Dia" (*My Day*):** Foco diário nas prioridades inegociáveis para não se perder na rotina.
+* 🛒 **Marketplaces Estruturados por Canal:**
+  * **🟠 Shopee (Ponto Focal):** Operação principal, chat, rotinas automatizadas e campanhas oficiais.
+  * **🟡 Mercado Livre (Setup & Tração):** Validação fiscal, primeiras vendas e padrão de fotos.
+  * **🔵 Magalu (Setup & Catálogo):** Homologação, tabela Magalu Entregas e carga de catálogo.
+  * **📦 Amazon (Setup & Buy Box):** Seller Central, GTIN/EAN e logística DBA.
+* 📱 **Redes Sociais — Meta Orgânico (Instagram & Facebook):**
+  * Centralização no Meta Business Suite, calendário editorial e engajamento com a comunidade (sem tráfego pago nesta fase).
+* 🔁 **Rotinas Recorrentes & Aguardando:** Checkpoints diários/semanais e acompanhamento de chamados e aprovações.
 * 🏷️ **Filtros Ágeis por Tags:** Busca instantânea por `#shopee`, `#mercadolivre`, `#wordpress`, `#instagram` ou `#urgente`.
 * 🧩 **Etapas (Subtarefas):** Detalhamento de passos para tarefas complexas.
 * 💾 **Persistência e Portabilidade:** Salvamento automático no navegador (`localStorage`) e suporte a exportação/importação de dados em JSON (`tarefas.json`).

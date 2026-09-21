@@ -1,233 +1,39 @@
 [
   {
-    "id": "wp-1",
-    "title": "Configurar Domínio, DNS e Certificado SSL",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
+    "id": "shp-1",
+    "title": "Acompanhar métricas diárias e chat de compradores (Shopee)",
+    "category": "shopee",
+    "categoryName": "🟠 Shopee",
     "myDay": true,
     "important": true,
     "completed": false,
     "dueDate": "",
-    "tags": ["#wordpress", "#infra"],
+    "tags": ["#shopee", "#foco", "#diario"],
     "subtasks": [
-      { "id": "wp-1-1", "title": "Apontar DNS do domínio para a hospedagem", "completed": false },
-      { "id": "wp-1-2", "title": "Emitir e forçar certificado SSL (HTTPS)", "completed": false },
-      { "id": "wp-1-3", "title": "Criar contas de e-mail profissionais (ex: contato@)", "completed": false }
+      { "id": "shp-1-1", "title": "Responder perguntas no chat (manter taxa de resposta > 95%)", "completed": false },
+      { "id": "shp-1-2", "title": "Conferir pedidos pendentes de envio e impressão de etiquetas", "completed": false }
     ]
   },
   {
-    "id": "wp-2",
-    "title": "Instalar WordPress, WooCommerce e Plugins essenciais",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
+    "id": "shp-2",
+    "title": "Inscrever produtos nas Campanhas Oficiais e Relâmpago da Shopee",
+    "category": "shopee",
+    "categoryName": "🟠 Shopee",
     "myDay": false,
     "important": true,
     "completed": false,
     "dueDate": "",
-    "tags": ["#wordpress"],
+    "tags": ["#shopee", "#campanhas"],
     "subtasks": [
-      { "id": "wp-2-1", "title": "Instalar WooCommerce e passar pelo assistente", "completed": false },
-      { "id": "wp-2-2", "title": "Instalar plugin de segurança (Wordfence ou similar)", "completed": false },
-      { "id": "wp-2-3", "title": "Configurar plugin de backup automático (UpdraftPlus)", "completed": false }
+      { "id": "shp-2-1", "title": "Checar Central de Marketing > Campanhas disponíveis", "completed": false },
+      { "id": "shp-2-2", "title": "Cadastrar os campeões de venda com preço promocional", "completed": false }
     ]
   },
   {
-    "id": "wp-3",
-    "title": "Configurar Moeda, Impostos e Endereço no WooCommerce",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#config"],
-    "subtasks": [
-      { "id": "wp-3-1", "title": "Definir moeda para Real Brasileiro (R$)", "completed": false },
-      { "id": "wp-3-2", "title": "Cadastrar endereço físico e CEP de origem", "completed": false }
-    ]
-  },
-  {
-    "id": "wp-4",
-    "title": "Criar Páginas Institucionais Obrigatórias",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#legal"],
-    "subtasks": [
-      { "id": "wp-4-1", "title": "Página: Quem Somos", "completed": false },
-      { "id": "wp-4-2", "title": "Página: Políticas de Privacidade e Termos", "completed": false },
-      { "id": "wp-4-3", "title": "Página: Trocas e Devoluções", "completed": false },
-      { "id": "wp-4-4", "title": "Página: Fale Conosco / Contato", "completed": false }
-    ]
-  },
-  {
-    "id": "wp-5",
-    "title": "Configurar Gateway de Pagamento (PIX e Cartão)",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": true,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#checkout"],
-    "subtasks": [
-      { "id": "wp-5-1", "title": "Criar conta e gerar chaves de API (Mercado Pago / Pagar.me / PagBank)", "completed": false },
-      { "id": "wp-5-2", "title": "Ativar e testar checkout transparente de PIX", "completed": false },
-      { "id": "wp-5-3", "title": "Ativar e testar checkout de Cartão de Crédito", "completed": false }
-    ]
-  },
-  {
-    "id": "wp-6",
-    "title": "Configurar Métodos de Envio / Frete",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": true,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#logistica"],
-    "subtasks": [
-      { "id": "wp-6-1", "title": "Instalar plugin de cotação (Melhor Envio / Frenet / Correios)", "completed": false },
-      { "id": "wp-6-2", "title": "Configurar faixas de frete grátis (se houver)", "completed": false },
-      { "id": "wp-6-3", "title": "Testar cotação no carrinho para capitais e interior", "completed": false }
-    ]
-  },
-  {
-    "id": "wp-7",
-    "title": "Cadastrar Primeiros 10 Produtos Piloto",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#produtos"],
-    "subtasks": [
-      { "id": "wp-7-1", "title": "Cadastrar categorias e atributos de variação", "completed": false },
-      { "id": "wp-7-2", "title": "Subir fotos otimizadas (fundo limpo, boas dimensões)", "completed": false },
-      { "id": "wp-7-3", "title": "Preencher peso e dimensões corretas (para o frete)", "completed": false },
-      { "id": "wp-7-4", "title": "Redigir títulos e descrições com SEO", "completed": false }
-    ]
-  },
-  {
-    "id": "wp-8",
-    "title": "Conectar Loja com ERP / Hub de Integração",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#integracao"],
-    "subtasks": [
-      { "id": "wp-8-1", "title": "Gerar Chaves de API REST do WooCommerce", "completed": false },
-      { "id": "wp-8-2", "title": "Vincular e testar sincronização de estoque no ERP (Bling / Tiny)", "completed": false }
-    ]
-  },
-  {
-    "id": "wp-9",
-    "title": "Pixel da Meta, Google Analytics e Sacolinha Instagram",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#marketing"],
-    "subtasks": [
-      { "id": "wp-9-1", "title": "Instalar Pixel da Meta e verificar domínio", "completed": false },
-      { "id": "wp-9-2", "title": "Sincronizar catálogo para a Sacolinha do Instagram", "completed": false },
-      { "id": "wp-9-3", "title": "Configurar Google Analytics 4 (GA4)", "completed": false }
-    ]
-  },
-  {
-    "id": "wp-10",
-    "title": "Fazer Compra Teste Completa (Go-Live)",
-    "category": "wordpress",
-    "categoryName": "🚀 E-commerce WordPress",
-    "myDay": false,
-    "important": true,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#wordpress", "#teste"],
-    "subtasks": [
-      { "id": "wp-10-1", "title": "Realizar pedido teste via PIX real", "completed": false },
-      { "id": "wp-10-2", "title": "Verificar se e-mail de confirmação chegou ao cliente", "completed": false },
-      { "id": "wp-10-3", "title": "Conferir se pedido baixou estoque no ERP", "completed": false },
-      { "id": "wp-10-4", "title": "Fazer estorno da compra teste", "completed": false }
-    ]
-  },
-  {
-    "id": "rot-1",
-    "title": "Checar painéis e reputação (Mercado Livre e Shopee)",
-    "category": "rotinas",
-    "categoryName": "🔁 Rotinas Recorrentes",
-    "myDay": true,
-    "important": true,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#diario", "#mercadolivre", "#shopee"],
-    "subtasks": [
-      { "id": "rot-1-1", "title": "Verificar cancelamentos ou mediações abertas", "completed": false },
-      { "id": "rot-1-2", "title": "Responder perguntas de compradores no ML", "completed": false }
-    ]
-  },
-  {
-    "id": "rot-2",
-    "title": "Verificar sincronização de estoque e pedidos no ERP",
-    "category": "rotinas",
-    "categoryName": "🔁 Rotinas Recorrentes",
-    "myDay": true,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#diario", "#erp"],
-    "subtasks": []
-  },
-  {
-    "id": "rot-3",
-    "title": "Responder DMs e comentários nas redes sociais",
-    "category": "rotinas",
-    "categoryName": "🔁 Rotinas Recorrentes",
-    "myDay": true,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#diario", "#instagram"],
-    "subtasks": []
-  },
-  {
-    "id": "rot-4",
-    "title": "Inscrever produtos nas campanhas da semana nos marketplaces",
-    "category": "rotinas",
-    "categoryName": "🔁 Rotinas Recorrentes",
-    "myDay": false,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#semanal", "#shopee", "#mercadolivre"],
-    "subtasks": []
-  },
-  {
-    "id": "mkt-1",
-    "title": "Auditoria de catálogo no Mercado Livre (fotos e fichas técnicas)",
-    "category": "marketplaces",
-    "categoryName": "🛒 Marketplaces & Catálogo",
-    "myDay": false,
-    "important": false,
-    "completed": false,
-    "dueDate": "",
-    "tags": ["#mercadolivre", "#catalogo"],
-    "subtasks": []
-  },
-  {
-    "id": "mkt-2",
-    "title": "Otimizar títulos e tags dos mais vendidos na Shopee",
-    "category": "marketplaces",
-    "categoryName": "🛒 Marketplaces & Catálogo",
+    "id": "shp-3",
+    "title": "Otimizar palavras-chave e títulos dos anúncios campeões",
+    "category": "shopee",
+    "categoryName": "🟠 Shopee",
     "myDay": false,
     "important": false,
     "completed": false,
@@ -236,35 +42,292 @@
     "subtasks": []
   },
   {
-    "id": "soc-1",
-    "title": "Planejar calendário de conteúdo da semana",
-    "category": "social",
-    "categoryName": "📱 Redes Sociais & Anúncios",
+    "id": "ml-1",
+    "title": "Configuração da Conta e Validação Fiscal no Mercado Livre",
+    "category": "mercadolivre",
+    "categoryName": "🟡 Mercado Livre",
+    "myDay": true,
+    "important": true,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#mercadolivre", "#setup"],
+    "subtasks": [
+      { "id": "ml-1-1", "title": "Validar dados cadastrais, CNPJ e certificado digital", "completed": false },
+      { "id": "ml-1-2", "title": "Configurar Mercado Envios e endereço de expedição", "completed": false }
+    ]
+  },
+  {
+    "id": "ml-2",
+    "title": "Cadastrar os primeiros anúncios no padrão Mercado Livre (Fundo Branco)",
+    "category": "mercadolivre",
+    "categoryName": "🟡 Mercado Livre",
     "myDay": false,
     "important": true,
     "completed": false,
     "dueDate": "",
-    "tags": ["#instagram", "#conteudo"],
+    "tags": ["#mercadolivre", "#catalogo"],
     "subtasks": [
-      { "id": "soc-1-1", "title": "Definir 3 pautas de Reels/Carrossel", "completed": false },
-      { "id": "soc-1-2", "title": "Redigir legendas e chamadas para ação (CTA)", "completed": false }
+      { "id": "ml-2-1", "title": "Garantir 1ª foto com fundo 100% branco puro (1200x1200px)", "completed": false },
+      { "id": "ml-2-2", "title": "Preencher ficha técnica completa (sem deixar campos em branco)", "completed": false },
+      { "id": "ml-2-3", "title": "Informar código EAN/GTIN válido de cada produto", "completed": false }
     ]
   },
   {
-    "id": "soc-2",
-    "title": "Agendar publicações no Meta Business Suite",
-    "category": "social",
-    "categoryName": "📱 Redes Sociais & Anúncios",
+    "id": "ml-3",
+    "title": "Estratégia para destravar o termômetro de reputação (Primeiras 10 vendas)",
+    "category": "mercadolivre",
+    "categoryName": "🟡 Mercado Livre",
     "myDay": false,
     "important": false,
     "completed": false,
     "dueDate": "",
-    "tags": ["#instagram", "#agendamento"],
+    "tags": ["#mercadolivre", "#reputacao"],
+    "subtasks": [
+      { "id": "ml-3-1", "title": "Selecionar 2 produtos com preço super competitivo para girar rápido", "completed": false }
+    ]
+  },
+  {
+    "id": "mag-1",
+    "title": "Concluir Cadastro e Homologação no Magalu Marketplace",
+    "category": "magalu",
+    "categoryName": "🔵 Magalu",
+    "myDay": false,
+    "important": true,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#magalu", "#setup"],
+    "subtasks": [
+      { "id": "mag-1-1", "title": "Enviar documentação cadastral para aprovação da conta", "completed": false },
+      { "id": "mag-1-2", "title": "Configurar dados bancários para repasse de vendas", "completed": false }
+    ]
+  },
+  {
+    "id": "mag-2",
+    "title": "Configurar Magalu Entregas e Tabela de Frete",
+    "category": "magalu",
+    "categoryName": "🔵 Magalu",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#magalu", "#frete"],
+    "subtasks": [
+      { "id": "mag-2-1", "title": "Definir se usará envio pelos Correios ou coleta Magalu", "completed": false }
+    ]
+  },
+  {
+    "id": "mag-3",
+    "title": "Carga inicial de produtos via ERP ou painel Magalu",
+    "category": "magalu",
+    "categoryName": "🔵 Magalu",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#magalu", "#catalogo"],
     "subtasks": []
   },
   {
+    "id": "amz-1",
+    "title": "Abertura e Configuração da Conta Amazon Seller Central",
+    "category": "amazon",
+    "categoryName": "📦 Amazon",
+    "myDay": false,
+    "important": true,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#amazon", "#setup"],
+    "subtasks": [
+      { "id": "amz-1-1", "title": "Submeter documentos do titular/empresa para verificação", "completed": false },
+      { "id": "amz-1-2", "title": "Definir modelo de logística (DBA - Delivery by Amazon ou envio próprio)", "completed": false }
+    ]
+  },
+  {
+    "id": "amz-2",
+    "title": "Cadastro e Mapeamento de Códigos de Barras (EAN/GTIN)",
+    "category": "amazon",
+    "categoryName": "📦 Amazon",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#amazon", "#gtin"],
+    "subtasks": [
+      { "id": "amz-2-1", "title": "Solicitar isenção de GTIN se produtos forem de marca própria sem EAN", "completed": false }
+    ]
+  },
+  {
+    "id": "wp-1",
+    "title": "Preparar Ambiente e Instalações Iniciais no Computador",
+    "category": "wordpress",
+    "categoryName": "🚀 E-commerce WordPress",
+    "myDay": true,
+    "important": true,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#wordpress", "#inicio"],
+    "subtasks": [
+      { "id": "wp-1-1", "title": "Finalizar instalação dos aplicativos locais (LocalWP / VS Code / etc.)", "completed": false },
+      { "id": "wp-1-2", "title": "Criar a primeira instalação limpa do WordPress local ou na hospedagem", "completed": false }
+    ]
+  },
+  {
+    "id": "wp-2",
+    "title": "Configuração de Domínio, DNS e Hospedagem Oficial",
+    "category": "wordpress",
+    "categoryName": "🚀 E-commerce WordPress",
+    "myDay": false,
+    "important": true,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#wordpress", "#infra"],
+    "subtasks": [
+      { "id": "wp-2-1", "title": "Registrar domínio (.com.br ou .com)", "completed": false },
+      { "id": "wp-2-2", "title": "Apontar DNS e ativar SSL (HTTPS gratuito)", "completed": false }
+    ]
+  },
+  {
+    "id": "wp-3",
+    "title": "Instalação do WooCommerce e Configurações Essenciais",
+    "category": "wordpress",
+    "categoryName": "🚀 E-commerce WordPress",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#wordpress", "#woocommerce"],
+    "subtasks": [
+      { "id": "wp-3-1", "title": "Definir moeda (BRL - R$) e dados cadastrais da loja", "completed": false },
+      { "id": "wp-3-2", "title": "Instalar tema leve e responsivo (ex: Astra ou Storefront)", "completed": false }
+    ]
+  },
+  {
+    "id": "wp-4",
+    "title": "Configurar Meios de Pagamento (PIX e Cartão)",
+    "category": "wordpress",
+    "categoryName": "🚀 E-commerce WordPress",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#wordpress", "#pagamento"],
+    "subtasks": [
+      { "id": "wp-4-1", "title": "Instalar plugin oficial do Mercado Pago / Pagar.me", "completed": false },
+      { "id": "wp-4-2", "title": "Testar checkout transparente de PIX e Cartão", "completed": false }
+    ]
+  },
+  {
+    "id": "wp-5",
+    "title": "Configurar Módulo de Frete (Melhor Envio ou Frenet)",
+    "category": "wordpress",
+    "categoryName": "🚀 E-commerce WordPress",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#wordpress", "#frete"],
+    "subtasks": [
+      { "id": "wp-5-1", "title": "Conectar token da transportadora/integrador de frete", "completed": false },
+      { "id": "wp-5-2", "title": "Configurar CEP de origem e regras de frete grátis", "completed": false }
+    ]
+  },
+  {
+    "id": "wp-6",
+    "title": "Criar Páginas Institucionais Obrigatórias (Termos, Políticas, Trocas)",
+    "category": "wordpress",
+    "categoryName": "🚀 E-commerce WordPress",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#wordpress", "#legal"],
+    "subtasks": []
+  },
+  {
+    "id": "wp-7",
+    "title": "Cadastrar 10 Primeiros Produtos Piloto e Testar Compra Real",
+    "category": "wordpress",
+    "categoryName": "🚀 E-commerce WordPress",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#wordpress", "#golive"],
+    "subtasks": []
+  },
+  {
+    "id": "meta-1",
+    "title": "Centralizar Instagram e Facebook no Meta Business Suite",
+    "category": "meta",
+    "categoryName": "📱 Meta (Instagram & Face)",
+    "myDay": true,
+    "important": true,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#meta", "#instagram", "#facebook"],
+    "subtasks": [
+      { "id": "meta-1-1", "title": "Vincular perfil comercial do Instagram à Página do Facebook", "completed": false },
+      { "id": "meta-1-2", "title": "Testar acesso ao Meta Business Suite no computador para agendamentos", "completed": false }
+    ]
+  },
+  {
+    "id": "meta-2",
+    "title": "Planejar Calendário Orgânico da Semana (3 a 5 posts)",
+    "category": "meta",
+    "categoryName": "📱 Meta (Instagram & Face)",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#conteudo", "#organico"],
+    "subtasks": [
+      { "id": "meta-2-1", "title": "Rascunhar 2 posts de demonstração de produtos campeões", "completed": false },
+      { "id": "meta-2-2", "title": "Rascunhar 1 post com prova social / depoimento de cliente", "completed": false }
+    ]
+  },
+  {
+    "id": "meta-3",
+    "title": "Agendar Publicações Orgânicas no Meta Business Suite",
+    "category": "meta",
+    "categoryName": "📱 Meta (Instagram & Face)",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#agendamento", "#meta"],
+    "subtasks": []
+  },
+  {
+    "id": "meta-4",
+    "title": "Rotina Diária: Interagir com Comentários e DMs (Engajamento)",
+    "category": "meta",
+    "categoryName": "📱 Meta (Instagram & Face)",
+    "myDay": false,
+    "important": false,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#diario", "#comunidade"],
+    "subtasks": []
+  },
+  {
+    "id": "rot-1",
+    "title": "Ronda Matinal nos Marketplaces (Foco Shopee + monitorar outros)",
+    "category": "rotinas",
+    "categoryName": "🔁 Rotinas Recorrentes",
+    "myDay": true,
+    "important": true,
+    "completed": false,
+    "dueDate": "",
+    "tags": ["#diario", "#operacional"],
+    "subtasks": [
+      { "id": "rot-1-1", "title": "1. Shopee: Envio de pedidos e mensagens de clientes", "completed": false },
+      { "id": "rot-1-2", "title": "2. Checar se há notificações ou perguntas no Mercado Livre", "completed": false },
+      { "id": "rot-1-3", "title": "3. Checar status de chamados/pendências no Magalu e Amazon", "completed": false }
+    ]
+  },
+  {
     "id": "wait-1",
-    "title": "Acompanhar retorno sobre aprovação de fotos/materiais",
+    "title": "Aguardando aprovação de cadastro/documentação nos novos canais",
     "category": "aguardando",
     "categoryName": "⏳ Aguardando / Chamados",
     "myDay": false,
