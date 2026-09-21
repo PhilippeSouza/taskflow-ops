@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu To-Do | E-commerce, Marketplaces & Redes</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Barra Lateral (Sidebar) -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-icon">⚡</div>
+          <div class="brand-text">
+            <h2>TaskFlow Ops</h2>
+            <span>E-commerce & Marketplaces</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">VISÃO DIÁRIA</div>
+        <button class="nav-item active" data-filter="myDay">
+          <span class="nav-icon">☀️</span>
+          <span class="nav-label">Meu Dia</span>
+          <span class="nav-badge" id="count-myDay">0</span>
+        </button>
+        <button class="nav-item" data-filter="important">
+          <span class="nav-icon">⭐</span>
+          <span class="nav-label">Importantes</span>
+          <span class="nav-badge" id="count-important">0</span>
+        </button>
+        <button class="nav-item" data-filter="all">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Todas as Tarefas</span>
+          <span class="nav-badge" id="count-all">0</span>
+        </button>
+
+        <div class="nav-section-title">SUAS FRENTES DE TRABALHO</div>
+        <button class="nav-item" data-filter="wordpress">
+          <span class="nav-icon">🚀</span>
+          <span class="nav-label">E-commerce WordPress</span>
+          <span class="nav-badge wp-badge" id="wp-progress-pill">0%</span>
+        </button>
+        <button class="nav-item" data-filter="marketplaces">
+          <span class="nav-icon">🛒</span>
+          <span class="nav-label">Marketplaces & Catálogo</span>
+          <span class="nav-badge" id="count-marketplaces">0</span>
+        </button>
+        <button class="nav-item" data-filter="social">
+          <span class="nav-icon">📱</span>
+          <span class="nav-label">Redes Sociais & Anúncios</span>
+          <span class="nav-badge" id="count-social">0</span>
+        </button>
+        <button class="nav-item" data-filter="rotinas">
+          <span class="nav-icon">🔁</span>
+          <span class="nav-label">Rotinas Recorrentes</span>
+          <span class="nav-badge" id="count-rotinas">0</span>
+        </button>
+        <button class="nav-item" data-filter="aguardando">
+          <span class="nav-icon">⏳</span>
+          <span class="nav-label">Aguardando / Chamados</span>
+          <span class="nav-badge" id="count-aguardando">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="assistant-card">
+          <div class="assistant-status">
+            <span class="status-dot"></span> Copiloto IA Ativo
+          </div>
+          <p>Trabalhando junto no diretório <strong>Controle de tarefas</strong>.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      <!-- Topo -->
+      <header class="top-bar">
+        <div class="view-info">
+          <h1 id="current-view-title">☀️ Meu Dia</h1>
+          <p id="current-date-str">Carregando data...</p>
+        </div>
+
+        <div class="top-actions">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Buscar tarefas ou #tags...">
+          </div>
+          <button id="btn-export" class="btn-secondary" title="Exportar dados para salvar no arquivo tarefas.json">
+            💾 Salvar tarefas.json
+          </button>
+          <button id="btn-import-toggle" class="btn-ghost" title="Carregar ou restaurar arquivo JSON">
+            📂 Importar
+          </button>
+          <input type="file" id="file-import" accept=".json" style="display: none;">
+        </div>
+      </header>
+
+      <!-- Painel de Progresso Especial para o E-commerce WordPress -->
+      <div id="wp-progress-banner" class="progress-banner" style="display: none;">
+        <div class="progress-info">
+          <div>
+            <h3>🚀 Termômetro de Lançamento da Loja (WordPress)</h3>
+            <p>Conclua as etapas essenciais para colocar o e-commerce no ar com segurança.</p>
+          </div>
+          <span class="progress-percentage" id="wp-progress-text">0%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="wp-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Formulário de Adicionar Tarefa Rápida -->
+      <div class="add-task-container">
+        <div class="add-task-input-wrapper">
+          <span class="plus-icon">➕</span>
+          <input type="text" id="new-task-title" placeholder="Adicionar uma tarefa... (Pressione Enter)" autofocus>
+        </div>
+        <div class="add-task-options">
+          <select id="new-task-category">
+            <option value="myDay">☀️ Meu Dia (Geral)</option>
+            <option value="wordpress">🚀 E-commerce WordPress</option>
+            <option value="marketplaces">🛒 Marketplaces & Catálogo</option>
+            <option value="social">📱 Redes Sociais & Anúncios</option>
+            <option value="rotinas">🔁 Rotinas Recorrentes</option>
+            <option value="aguardando">⏳ Aguardando / Chamados</option>
+          </select>
+          <input type="text" id="new-task-tags" placeholder="Tags: #shopee, #urgente">
+          <button id="btn-add-task" class="btn-primary">Adicionar</button>
+        </div>
+      </div>
+
+      <!-- Lista de Tarefas -->
+      <div class="tasks-section">
+        <div class="tasks-header">
+          <span id="tasks-count-label">Tarefas</span>
+          <div class="filter-toggles">
+            <button id="btn-hide-completed" class="toggle-btn active">Ocultar Concluídas</button>
+          </div>
+        </div>
+
+        <ul class="task-list" id="task-list">
+          <!-- As tarefas serão renderizadas dinamicamente aqui -->
+        </ul>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
