@@ -44,7 +44,7 @@ O **TaskFlow Ops** foi projetado para eliminar a sobrecarga mental e oferecer um
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/SEU_USUARIO/taskflow-ops.git
+   git clone https://github.com/PhilippeSouza/taskflow-ops.git
    ```
 2. Abra o arquivo `index.html` diretamente em qualquer navegador moderno, ou execute o `Abrir_Meu_ToDo.bat` no Windows.
 
@@ -52,8 +52,8 @@ O **TaskFlow Ops** foi projetado para eliminar a sobrecarga mental e oferecer um
 
 ## 🌐 Demonstração Online (GitHub Pages)
 
-Você pode testar a aplicação diretamente pelo navegador através do **GitHub Pages**:
-`https://SEU_USUARIO.github.io/taskflow-ops` *(substitua pelo seu link após publicação)*.
+Você pode testar a aplicação diretamente pelo navegador através do **GitHub Pages**:  
+👉 **[https://philippesouza.github.io/taskflow-ops/](https://philippesouza.github.io/taskflow-ops/)** *(após ativar nas configurações do repositório)*.
 
 ---
 
