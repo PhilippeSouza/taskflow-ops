@@ -1,0 +1,12 @@
+{
+  "name": "taskflow-ops-qa",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Testes automatizados de interface do TaskFlow Ops (Playwright)",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1"
+  }
+}

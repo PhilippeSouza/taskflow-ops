@@ -55,7 +55,17 @@ O **TaskFlow Ops** foi projetado para eliminar a sobrecarga mental e oferecer um
 ## 🌐 Demonstração Online (GitHub Pages)
 
 Você pode testar a aplicação diretamente pelo navegador através do **GitHub Pages**:  
-👉 **[https://philippesouza.github.io/taskflow-ops/](https://philippesouza.github.io/taskflow-ops/)** *(após ativar nas configurações do repositório)*.
+👉 **[https://philippesouza.github.io/taskflow-ops/](https://philippesouza.github.io/taskflow-ops/)**.
+
+---
+
+## 🧪 Qualidade (QA)
+
+O projeto tem uma rodada de testes documentada na pasta [`qa/`](qa/): plano de testes, 37 casos de teste, relatório com 11 bugs encontrados e corrigidos (com passos para reproduzir) e 21 testes automatizados com Playwright.
+
+> O app foi desenvolvido com apoio de IA; o meu papel é especificar, testar, validar e documentar.
+
+Nota: ao abrir o `index.html` direto pelo arquivo (`file://`), o Chrome bloqueia a leitura do `tarefas.json` (BUG-11); o app mostra um aviso e você pode usar "Importar". Prefira o link do GitHub Pages ou um servidor local.
 
 ---
 
