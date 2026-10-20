@@ -3,6 +3,7 @@ let tasks = [];
 let currentFilter = 'myDay';
 let searchQuery = '';
 let hideCompleted = false;
+let loadFailed = false;
 
 // Elementos do DOM
 const taskListEl = document.getElementById('task-list');
@@ -23,6 +24,51 @@ const btnExport = document.getElementById('btn-export');
 const btnReset = document.getElementById('btn-reset');
 const btnImportToggle = document.getElementById('btn-import-toggle');
 const fileImport = document.getElementById('file-import');
+
+// Escapa texto para uso seguro dentro de HTML (evita XSS)
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// Id único mesmo quando duas tarefas são criadas no mesmo milissegundo
+let idCounter = 0;
+function newId() {
+  if (window.crypto && crypto.randomUUID) return 't-' + crypto.randomUUID();
+  idCounter += 1;
+  return 't-' + Date.now() + '-' + idCounter;
+}
+
+// Valida e normaliza uma lista de tarefas; devolve null se o formato for inválido
+function normalizeTasks(list) {
+  if (!Array.isArray(list)) return null;
+  const result = [];
+  for (const item of list) {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) return null;
+    if (typeof item.title !== 'string' || !item.title.trim()) return null;
+    const category = typeof item.category === 'string' ? item.category : 'myDay';
+    result.push({
+      id: typeof item.id === 'string' && item.id ? item.id : newId(),
+      title: item.title,
+      category: category,
+      categoryName: typeof item.categoryName === 'string' ? item.categoryName : (categoryNames[category] || 'Geral'),
+      myDay: Boolean(item.myDay),
+      important: Boolean(item.important),
+      completed: Boolean(item.completed),
+      dueDate: typeof item.dueDate === 'string' ? item.dueDate : '',
+      tags: Array.isArray(item.tags) ? item.tags.filter(t => typeof t === 'string' && t.trim()) : [],
+      subtasks: Array.isArray(item.subtasks)
+        ? item.subtasks.filter(st => st && typeof st.title === 'string').map((st, i) => ({
+            id: typeof st.id === 'string' && st.id ? st.id : (item.id || 'st') + '-' + (i + 1),
+            title: st.title,
+            completed: Boolean(st.completed)
+          }))
+        : []
+    });
+  }
+  return result;
+}
 
 // Mapeamento de Títulos das Listas
 const viewTitles = {
@@ -71,8 +117,12 @@ async function loadTasks(forceReloadFromFile = false) {
     const localData = localStorage.getItem('taskflow_tasks_v2');
     if (localData) {
       try {
-        tasks = JSON.parse(localData);
-        return;
+        const parsed = normalizeTasks(JSON.parse(localData));
+        if (parsed) {
+          tasks = parsed;
+          return;
+        }
+        console.error('Dados do LocalStorage em formato inválido; recarregando do arquivo.');
       } catch (e) {
         console.error('Erro ao ler LocalStorage:', e);
       }
@@ -83,14 +133,19 @@ async function loadTasks(forceReloadFromFile = false) {
   try {
     const res = await fetch('tarefas.json?v=' + Date.now());
     if (res.ok) {
-      tasks = await res.json();
-      saveTasks();
-      return;
+      const parsed = normalizeTasks(await res.json());
+      if (parsed) {
+        tasks = parsed;
+        loadFailed = false;
+        saveTasks();
+        return;
+      }
     }
   } catch (err) {
     console.log('Tentativa de carregar tarefas.json:', err);
   }
 
+  loadFailed = true;
   tasks = [];
 }
 
@@ -158,7 +213,7 @@ function setupEventListeners() {
   // Botão de recarregar estrutura inicial
   if (btnReset) {
     btnReset.addEventListener('click', async () => {
-      if (confirm('Deseja recarregar a lista atualizada a partir do tarefas.json? (As alterações locais serão sincronizadas com o arquivo)')) {
+      if (confirm('Atenção: isto descarta as tarefas e alterações feitas aqui e volta para a lista do tarefas.json. Para guardar o que você fez, use "Salvar tarefas.json" antes. Deseja continuar?')) {
         await loadTasks(true);
         renderApp();
       }
@@ -173,15 +228,21 @@ function setupEventListeners() {
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
-        const imported = JSON.parse(event.target.result);
-        if (Array.isArray(imported)) {
-          tasks = imported;
-          saveTasks();
-          renderApp();
-          alert('Tarefas importadas com sucesso!');
+        const imported = normalizeTasks(JSON.parse(event.target.result));
+        if (!imported) {
+          alert('Arquivo inválido: o JSON precisa ser uma lista de tarefas, e cada tarefa precisa ter um "title" (texto). Nada foi alterado.');
+          return;
         }
+        if (!confirm('Importar ' + imported.length + ' tarefa(s)? Isto substitui todas as tarefas atuais.')) return;
+        tasks = imported;
+        loadFailed = false;
+        saveTasks();
+        renderApp();
+        alert('Tarefas importadas com sucesso!');
       } catch (err) {
         alert('Erro ao importar arquivo JSON: ' + err.message);
+      } finally {
+        fileImport.value = '';
       }
     };
     reader.readAsText(file);
@@ -194,10 +255,14 @@ function handleAddTask() {
 
   const category = newTaskCategory.value;
   const rawTags = newTaskTags.value.trim();
-  const tags = rawTags ? rawTags.split(',').map(t => t.trim().startsWith('#') ? t.trim() : '#' + t.trim()) : [];
+  const tags = rawTags
+    .split(',')
+    .map(t => t.trim().replace(/^#+/, '').trim())
+    .filter(Boolean)
+    .map(t => '#' + t);
 
   const newTask = {
-    id: 't-' + Date.now(),
+    id: newId(),
     title: title,
     category: category === 'myDay' ? 'myDay' : category,
     categoryName: categoryNames[category] || 'Geral',
@@ -246,10 +311,8 @@ function updateBadges() {
 
 function updateWpProgress() {
   const wpTasks = tasks.filter(t => t.category === 'wordpress');
-  if (wpTasks.length === 0) return;
-
   const completed = wpTasks.filter(t => t.completed).length;
-  const percentage = Math.round((completed / wpTasks.length) * 100);
+  const percentage = wpTasks.length === 0 ? 0 : Math.round((completed / wpTasks.length) * 100);
 
   if (wpProgressPill) wpProgressPill.textContent = `${percentage}%`;
   if (wpProgressBar) wpProgressBar.style.width = `${percentage}%`;
@@ -284,6 +347,17 @@ function renderTasks() {
   const countLabel = document.getElementById('tasks-count-label');
   countLabel.textContent = `${filtered.length} TAREFAS`;
 
+  if (filtered.length === 0 && loadFailed && tasks.length === 0) {
+    taskListEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠️</div>
+        <h3>Não foi possível carregar o tarefas.json</h3>
+        <p>Isso acontece quando o arquivo é aberto direto do disco (file://). Abra pelo link do GitHub Pages, use um servidor local ou clique em "Importar" para carregar o arquivo.</p>
+      </div>
+    `;
+    return;
+  }
+
   if (filtered.length === 0) {
     taskListEl.innerHTML = `
       <div class="empty-state">
@@ -304,8 +378,8 @@ function renderTasks() {
     if (task.subtasks && task.subtasks.length > 0) {
       const subtaskItems = task.subtasks.map(st => `
         <li class="subtask-item ${st.completed ? 'completed' : ''}">
-          <input type="checkbox" class="subtask-checkbox" data-taskid="${task.id}" data-subid="${st.id}" ${st.completed ? 'checked' : ''}>
-          <span>${st.title}</span>
+          <input type="checkbox" class="subtask-checkbox" data-taskid="${esc(task.id)}" data-subid="${esc(st.id)}" ${st.completed ? 'checked' : ''}>
+          <span>${esc(st.title)}</span>
         </li>
       `).join('');
 
@@ -318,28 +392,28 @@ function renderTasks() {
     }
 
     // Tags
-    const tagsHtml = (task.tags || []).map(t => `<span class="tag-pill" onclick="filterByTag('${t}')">${t}</span>`).join(' ');
+    const tagsHtml = (task.tags || []).map(t => `<span class="tag-pill" data-tag="${esc(t)}">${esc(t)}</span>`).join(' ');
 
     li.innerHTML = `
       <div class="task-main-row">
-        <div class="task-checkbox" data-action="toggle-complete" data-id="${task.id}">
+        <div class="task-checkbox" data-action="toggle-complete" data-id="${esc(task.id)}">
           <span class="task-checkbox-check">✓</span>
         </div>
         <div class="task-content">
-          <span class="task-title" data-action="toggle-complete" data-id="${task.id}">${task.title}</span>
+          <span class="task-title" data-action="toggle-complete" data-id="${esc(task.id)}">${esc(task.title)}</span>
           <div class="task-meta">
-            <span class="category-tag cat-${task.category}">${task.categoryName || 'Geral'}</span>
+            <span class="category-tag cat-${esc(String(task.category).replace(/[^a-zA-Z0-9_-]/g, ''))}">${esc(task.categoryName || 'Geral')}</span>
             ${tagsHtml}
           </div>
         </div>
         <div class="task-actions">
-          <button class="action-icon-btn ${task.myDay ? 'active-sun' : ''}" data-action="toggle-myday" data-id="${task.id}" title="${task.myDay ? 'Remover do Meu Dia' : 'Adicionar ao Meu Dia'}">
+          <button class="action-icon-btn ${task.myDay ? 'active-sun' : ''}" data-action="toggle-myday" data-id="${esc(task.id)}" title="${task.myDay ? 'Remover do Meu Dia' : 'Adicionar ao Meu Dia'}">
             ☀️
           </button>
-          <button class="action-icon-btn ${task.important ? 'active-star' : ''}" data-action="toggle-star" data-id="${task.id}" title="Marcar como importante">
+          <button class="action-icon-btn ${task.important ? 'active-star' : ''}" data-action="toggle-star" data-id="${esc(task.id)}" title="Marcar como importante">
             ⭐
           </button>
-          <button class="action-icon-btn" data-action="delete" data-id="${task.id}" title="Excluir tarefa">
+          <button class="action-icon-btn" data-action="delete" data-id="${esc(task.id)}" title="Excluir tarefa">
             🗑️
           </button>
         </div>
@@ -358,6 +432,11 @@ function renderTasks() {
       const id = el.dataset.id;
       handleTaskAction(action, id);
     });
+  });
+
+  // Clique em tag: preenche a busca
+  taskListEl.querySelectorAll('.tag-pill').forEach(el => {
+    el.addEventListener('click', () => filterByTag(el.dataset.tag));
   });
 
   // Delegar eventos de subtarefas
